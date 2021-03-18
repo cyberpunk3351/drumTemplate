@@ -103,13 +103,6 @@ function css(params) {
             }
         ))
         .pipe(dest(path.build.css))
-        .pipe(clean_css())
-        .pipe(
-            rename({
-                extname: ".min.css"
-            })
-        )
-        .pipe(dest(path.build.css))
         .pipe(browsersync.reload({ stream: true }));
 }
 function js() {
@@ -137,6 +130,7 @@ function watchFiles(params) {
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.fonts], fonts);
+    gulp.watch([path.watch.img], img);
 }
 let build = gulp.series(gulp.parallel(clean, js, css, html, img, fonts));
 let watch = gulp.parallel(build, watchFiles, browserSync);
@@ -144,6 +138,8 @@ let watch = gulp.parallel(build, watchFiles, browserSync);
 exports.fonts = fonts
 exports.html = html;
 exports.js = js;
+exports.img = img;
+exports.css = css;
 exports.build = build;
 exports.watch = watch;
 exports.default = watch;
